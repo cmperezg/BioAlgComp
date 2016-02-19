@@ -1,5 +1,8 @@
 package algcomp.alg;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 public class PathChromosome extends Chromosome {
@@ -21,7 +24,11 @@ public class PathChromosome extends Chromosome {
 			//printArray(path);
 		}
 		
-		
+		private PathChromosome(int _nump, int[] _path){
+			numpoints = _nump;
+			eval = 0.0;
+			path = _path;
+		}
 		
 		public double getEval() {
 			return eval;
@@ -37,8 +44,21 @@ public class PathChromosome extends Chromosome {
 		
 		@Override
 		public Chromosome crossover(Chromosome c) {
-			// TODO Auto-generated method stub
-			return null;
+			Random r = new Random();
+			int xpoint = r.nextInt(numpoints);
+			int[] newpath = new int[numpoints];
+			ArrayList<Integer> cpath = ((PathChromosome) c).listPath();
+			for(int i = 0; i<xpoint;i++){
+				newpath[i] = path[i];
+				int del = cpath.indexOf(path[i]);
+				cpath.remove(del);
+			}
+			for(int i=0;i<cpath.size();i++){
+				newpath[xpoint] = cpath.remove(0);
+				xpoint++;
+			}
+			Chromosome ret = new PathChromosome(numpoints,newpath);
+			return ret;
 		}
 		
 		@Override
@@ -76,7 +96,13 @@ public class PathChromosome extends Chromosome {
 		    }
 		}
 		
-		
+		private ArrayList<Integer> listPath(){
+			ArrayList<Integer> list = new ArrayList<Integer>();
+			for(int i = 0;i<numpoints;i++){
+				list.add(path[i]);
+			}
+			return list;
+		}
 		//for testing
 		private void printArray(int[] arr){
 			for(int i = 0;i<arr.length;i++){

@@ -35,6 +35,7 @@ public abstract class Chromosome {
 	public void setEval(double eval) {
 		this.eval = eval;
 	}
+
 	
 	
 }

@@ -36,12 +36,18 @@ public class GraphPanel extends JPanel {
 		repaint();
 	}
 	
+	public void setPath(int[] _path){
+		
+	}
+	
 	public void paintComponent(Graphics g)
     {
-		//this.setBackground(Color.white);
 		for(int i=0;i<graph.points.size();i++){
 			Graphics2D g2d = (Graphics2D)g;
 			g2d.fillOval(graph.points.get(i).getX(), graph.points.get(i).getY(),5, 5);
+		}
+		if(hasPath == true){
+			
 		}
 		
     }
