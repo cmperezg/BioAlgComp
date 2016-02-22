@@ -85,6 +85,30 @@ public class Genetic {
 		return bestsofar;
 	}
 	
+	//full run stopped by timer
+	public Chromosome fullrun(){
+		final Thread thisThread = Thread.currentThread();
+		final int timeToRun = timer; // 1200 = 2 minutes;
+
+		new Thread(new Runnable() {
+		    public void run() {
+		        try {
+					thisThread.sleep(timeToRun);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+					System.out.println("Problem with putting thread to sleep");
+				}
+		        thisThread.interrupt();
+		    }
+		}).start();
+
+		while (!Thread.interrupted()) {
+		    step();
+		}
+		
+		return bestsofar;
+	}
+	
 	//evaluate each chromosome and set selection probabilities.
 	public void evaluateGeneration(){
 		double fitness_sum = 0.0;
@@ -104,7 +128,7 @@ public class Genetic {
 		}
 	}
 	
-	
+	//single path evaluation
 	public double evaluate(PathChromosome pc) {
 		double ev = 0.0;
 		int[] path = pc.getPath();

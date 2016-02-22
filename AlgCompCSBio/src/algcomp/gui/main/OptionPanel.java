@@ -24,7 +24,7 @@ public class OptionPanel extends JPanel{
 	//preferred size of panel
 	public Dimension getPreferredSize(){
 			
-	    return (new Dimension(300, 500));
+	    return (new Dimension(250,150));
 	}
 	
 	private void genPan(){
