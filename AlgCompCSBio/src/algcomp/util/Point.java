@@ -25,6 +25,13 @@ public class Point {
 		this.id = id;
 	}
 	
+	public void setx(int x) {
+		this.x = x;
+	}
+	public void sety(int y) {
+		this.y = y;
+	}
+	
 	//returns distance from this point to another.
 	public double distanceTo(Point b){
 		//calculate the distance
