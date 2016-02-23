@@ -1,10 +1,10 @@
 package algcomp.alg;
-import algcomp.util.Point;
+import algcomp.util.Dpoint;
 public class Firefly {
-	Point pos;
+	Dpoint pos;
 	double Intensity;
 	
-		public Firefly(Point _pos ){
+		public Firefly(Dpoint _pos ){
 			pos=_pos;
 		}
 
