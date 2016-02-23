@@ -81,8 +81,8 @@ public class Genetic {
 		//add a random guy every generation, to keep things moving
 		newgen[gensize-1]=new PathChromosome(gr.size());
 		current_generation = newgen;
-		printArray(((PathChromosome)bestsofar).getPath());
-		System.out.println("STEP OVER");
+		//printArray(((PathChromosome)bestsofar).getPath());
+		//System.out.println("STEP OVER");
 		
 		return bestsofar;
 	}
@@ -119,7 +119,7 @@ public class Genetic {
 			double x = evaluate((PathChromosome) current_generation[i]);
 			fitness_sum = fitness_sum + x;
 			//printArray(((PathChromosome)current_generation[i]).getPath());
-			System.out.println(current_generation[i].getEval());
+			//System.out.println(current_generation[i].getEval());
 			if(current_generation[i].getEval() < bestsofar.getEval()){
 				bestsofar = current_generation[i];
 			}
@@ -137,7 +137,7 @@ public class Genetic {
 	public double evaluate(PathChromosome pc) {
 		double ev = 0.0;
 		int[] path = pc.getPath();
-		printArray(path);
+		//printArray(path);
 		for(int i=0; i<path.length-1;i++){
 			ev = ev + gr.getPoint(path[i]).distanceTo(gr.getPoint(path[i+1]));
 		}

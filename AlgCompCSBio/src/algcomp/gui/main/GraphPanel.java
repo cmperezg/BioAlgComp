@@ -70,7 +70,7 @@ public class GraphPanel extends JPanel {
 		g2d.setColor(Color.RED);
 		if(hasPath == true){
 			for(int i=0; i<path.length-1;i++){
-				g2d.drawLine(graph.getPoint(i).getX(), graph.getPoint(i).getY(), graph.getPoint(i+1).getX(), graph.getPoint(i+1).getY());
+				g2d.drawLine(graph.getPoint(path[i]).getX(), graph.getPoint(path[i]).getY(), graph.getPoint(path[i+1]).getX(), graph.getPoint(path[i+1]).getY());
 			}
 		}
     }
