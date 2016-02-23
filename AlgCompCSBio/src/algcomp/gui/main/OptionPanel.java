@@ -11,12 +11,40 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import algcomp.alg.Genetic;
+import algcomp.alg.PathChromosome;
+
+
 public class OptionPanel extends JPanel{
 	String type;
-	public OptionPanel(String _type){
+	GraphPanel gp;
+	
+	
+	Genetic genalg;
+	boolean alg_initialized;
+	
+	//genetic
+	JLabel gensizeL;
+	JLabel mutprobL;
+	JLabel timerL;
+	JTextField gensizeTF;
+	JTextField mutprobTF;
+	JTextField timerTF;
+	
+	JButton runstepB;
+	JButton runallB; 
+	
+	public OptionPanel(String _type, GraphPanel _gp){
 		type = _type;
+		gp = _gp;
+		
+		runstepB = new JButton("Run Step");
+		runallB = new JButton("Full Run"); 
+		
+		
 		if(type.equals("Genetic")){
 			genPan();
+			alg_initialized = false;
 		}
 		
 	}
@@ -27,21 +55,26 @@ public class OptionPanel extends JPanel{
 	    return (new Dimension(250,150));
 	}
 	
+	//
 	private void genPan(){
-		JLabel gensizeL = new JLabel("Generation size: ", SwingConstants.RIGHT);
-		JLabel mutprobL = new JLabel("Mutation probability: ", SwingConstants.RIGHT);
-		JTextField gensizeTF = new JTextField(10);
-		JTextField mutprobTF = new JTextField(10);
-		
-		JButton runstepB = new JButton("Run Step");
-		JButton runallB = new JButton("Full Run");
+		gensizeL = new JLabel("Generation size: ", SwingConstants.RIGHT);
+		mutprobL = new JLabel("Mutation probability: ", SwingConstants.RIGHT);
+		timerL = new JLabel("Timer for full run (ms): ", SwingConstants.RIGHT);
 
-		this.setLayout(new GridLayout(3,2));
+		gensizeTF = new JTextField("20");
+		mutprobTF = new JTextField("0.1");
+		timerTF = new JTextField("60000");
+		
+		
+
+		this.setLayout(new GridLayout(4,2));
 		
 		this.add(gensizeL);
 		this.add(gensizeTF);
 		this.add(mutprobL);
 		this.add(mutprobTF);
+		this.add(timerL);
+		this.add(timerTF);
 		this.add(runstepB);
 		this.add(runallB);
 		
@@ -49,7 +82,17 @@ public class OptionPanel extends JPanel{
 		runstepB.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Will run one step someday :D ");
+				if(!alg_initialized){
+					if(type.equals("Genetic")){
+						genalg = new Genetic(gp.getGraph(),Integer.parseInt(gensizeTF.getText()),Double.parseDouble(mutprobTF.getText()),Integer.parseInt(timerTF.getText()));
+						alg_initialized = true;
+					}
+				}
+					
+			if(type.equals("Genetic")){
+				gp.setPath(((PathChromosome) genalg.step()).getPath());	
+			}
+
 			}
 	    });
 		

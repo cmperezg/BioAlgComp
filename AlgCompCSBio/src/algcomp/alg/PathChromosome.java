@@ -42,19 +42,28 @@ public class PathChromosome extends Chromosome {
 		
 		@Override
 		public Chromosome crossover(Chromosome c) {
+			//System.out.println("NEW CROSSOVER");
 			Random r = new Random();
 			int xpoint = r.nextInt(numpoints);
 			int[] newpath = new int[numpoints];
 			ArrayList<Integer> cpath = ((PathChromosome) c).listPath();
+			//System.out.println(cpath.size());
+			//System.out.println(this.path.length);
 			for(int i = 0; i<xpoint;i++){
 				newpath[i] = path[i];
+				//System.out.println(cpath.size());
 				int del = cpath.indexOf(path[i]);
+				//System.out.println(del);
 				cpath.remove(del);
 			}
-			for(int i=0;i<cpath.size();i++){
+			int x = cpath.size();
+			for(int i=0;i<x;i++){
+				//System.out.println(cpath.size());
 				newpath[xpoint] = cpath.remove(0);
+				//System.out.println(newpath[xpoint]);
 				xpoint++;
 			}
+			//printArray(newpath);
 			Chromosome ret = new PathChromosome(numpoints,newpath);
 			return ret;
 		}

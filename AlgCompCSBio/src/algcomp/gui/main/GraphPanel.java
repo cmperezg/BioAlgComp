@@ -37,14 +37,32 @@ public class GraphPanel extends JPanel {
 		repaint();
 	}
 	
+	public Graph getGraph() {
+		return graph;
+	}
+
 	public void setPath(int[] _path){
 		path = _path;
 		hasPath = true;
+		//printArray(path);
+		removeAll();
+		revalidate();
 		repaint();
+		
+	}
+	
+	//for testing
+	private void printArray(int[] arr){
+		for(int i = 0;i<arr.length;i++){
+			System.out.print(arr[i]+",");
+		}
 	}
 	
 	public void paintComponent(Graphics g)
     {
+		
+		//System.out.println("amieventrying");
+		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D)g;
 		for(int i=0;i<graph.points.size();i++){
 			g2d.fillOval(graph.points.get(i).getX(), graph.points.get(i).getY(),5, 5);
@@ -55,6 +73,5 @@ public class GraphPanel extends JPanel {
 				g2d.drawLine(graph.getPoint(i).getX(), graph.getPoint(i).getY(), graph.getPoint(i+1).getX(), graph.getPoint(i+1).getY());
 			}
 		}
-		
     }
 }

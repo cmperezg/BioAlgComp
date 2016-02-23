@@ -9,7 +9,6 @@ public class Genetic {
 	Graph gr;
 	int gensize;
 	double mutprob;
-	boolean sbs;
 	int timer;
 	boolean graphprob;
 	
@@ -29,17 +28,17 @@ public class Genetic {
 	 * if sbs is false and timer is not zero, timer will be the time in ms for which the alg. will run.
 	 * otherwise it will run until the best path remains constant for constantcount generations.
 	 */
-	public Genetic(Graph _gr,int _gensize, double _mutprob, boolean _sbs,int _timer){
+	public Genetic(Graph _gr,int _gensize, double _mutprob, int _timer){
 		gr = _gr;
 		gensize = _gensize;
 		mutprob = _mutprob;
-		sbs = _sbs;
 		timer = _timer;
 		//if a graph is sent as a parameter, it is a graph problem...
 		graphprob = true;
 		//just a random chromosome... probably not the best thing to do.
 		bestsofar = new PathChromosome(gr.size());
-		
+		evaluate((PathChromosome)bestsofar);
+		System.out.println("firstbest" +bestsofar.getEval());
 		//initialize first generation
 		current_generation = new PathChromosome[gensize];
 		for(int i=0;i<gensize;i++){
@@ -82,6 +81,9 @@ public class Genetic {
 		//add a random guy every generation, to keep things moving
 		newgen[gensize-1]=new PathChromosome(gr.size());
 		current_generation = newgen;
+		printArray(((PathChromosome)bestsofar).getPath());
+		System.out.println("STEP OVER");
+		
 		return bestsofar;
 	}
 	
@@ -114,7 +116,10 @@ public class Genetic {
 		double fitness_sum = 0.0;
 		double prob_counter = 0.0;
 		for(int i = 0;i<current_generation.length;i++){
-			fitness_sum = fitness_sum +evaluate((PathChromosome) current_generation[i]);
+			double x = evaluate((PathChromosome) current_generation[i]);
+			fitness_sum = fitness_sum + x;
+			//printArray(((PathChromosome)current_generation[i]).getPath());
+			System.out.println(current_generation[i].getEval());
 			if(current_generation[i].getEval() < bestsofar.getEval()){
 				bestsofar = current_generation[i];
 			}
@@ -132,8 +137,9 @@ public class Genetic {
 	public double evaluate(PathChromosome pc) {
 		double ev = 0.0;
 		int[] path = pc.getPath();
+		printArray(path);
 		for(int i=0; i<path.length-1;i++){
-			ev = ev + gr.getPoint(i).distanceTo(gr.getPoint(i+1));
+			ev = ev + gr.getPoint(path[i]).distanceTo(gr.getPoint(path[i+1]));
 		}
 		
 		pc.setEval(ev);
@@ -148,6 +154,14 @@ public class Genetic {
 		}
 		System.out.println("something's wrong with the probabilities");
 		return null;
+	}
+	
+	//for testing
+	private void printArray(int[] arr){
+		System.out.println("");
+		for(int i = 0;i<arr.length;i++){
+			System.out.print(arr[i]+",");
+		}
 	}
 	
 }

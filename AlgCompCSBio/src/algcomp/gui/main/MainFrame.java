@@ -27,7 +27,7 @@ public class MainFrame {
         mainpanel.setLayout(new GridLayout(1,2));
         
         canvas = new GraphPanel("/u1/cmperezgavilantorres/workspacejava/graphs/g1");
-        options = new OptionPanel("Genetic");
+        options = new OptionPanel("Genetic",canvas);
         
         
         allop.setLayout(new GridLayout(2,1));
