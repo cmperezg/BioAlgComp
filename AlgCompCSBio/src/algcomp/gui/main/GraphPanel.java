@@ -1,5 +1,6 @@
 package algcomp.gui.main;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -60,14 +61,15 @@ public class GraphPanel extends JPanel {
 	
 	public void paintComponent(Graphics g)
     {
-		
-		//System.out.println("amieventrying");
+
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D)g;
+		g2d.setColor(Color.BLUE);
 		for(int i=0;i<graph.points.size();i++){
-			g2d.fillOval(graph.points.get(i).getX(), graph.points.get(i).getY(),5, 5);
+			g2d.fillOval(graph.points.get(i).getX(), graph.points.get(i).getY(),7, 7);
 		}
 		g2d.setColor(Color.RED);
+		g2d.setStroke(new BasicStroke(2));
 		if(hasPath == true){
 			for(int i=0; i<path.length-1;i++){
 				g2d.drawLine(graph.getPoint(path[i]).getX(), graph.getPoint(path[i]).getY(), graph.getPoint(path[i+1]).getX(), graph.getPoint(path[i+1]).getY());

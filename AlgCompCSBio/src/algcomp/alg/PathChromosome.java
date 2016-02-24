@@ -111,14 +111,25 @@ public class PathChromosome extends Chromosome {
 			return list;
 		}
 		//for testing
-		private void printArray(int[] arr){
+		private String printArray(int[] arr){
+			String s = "";
 			for(int i = 0;i<arr.length;i++){
-				System.out.print(arr[i]+",");
+				s = s +(arr[i]+",");
 			}
+			
+			return s;
 		}
 
 
-		
+		public String toString(){
+			String s = "Ev: " + this.eval
+					+" Prob: " + this.prob
+					+ " F: " + this.from
+					+ " T: " + this.to
+					+ " CH: " + printArray(path);
+			
+			return s;
+		}
 
 
 		

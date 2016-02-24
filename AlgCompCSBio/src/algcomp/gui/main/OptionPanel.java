@@ -27,9 +27,11 @@ public class OptionPanel extends JPanel{
 	JLabel gensizeL;
 	JLabel mutprobL;
 	JLabel timerL;
+	JLabel immigrantsL;
 	JTextField gensizeTF;
 	JTextField mutprobTF;
 	JTextField timerTF;
+	JTextField immigrantsTF;
 	
 	JButton runstepB;
 	JButton runallB; 
@@ -59,20 +61,23 @@ public class OptionPanel extends JPanel{
 	private void genPan(){
 		gensizeL = new JLabel("Generation size: ", SwingConstants.RIGHT);
 		mutprobL = new JLabel("Mutation probability: ", SwingConstants.RIGHT);
+		immigrantsL = new JLabel("Random immigrants: ", SwingConstants.RIGHT);
 		timerL = new JLabel("Timer for full run (ms): ", SwingConstants.RIGHT);
 
-		gensizeTF = new JTextField("20");
-		mutprobTF = new JTextField("0.1");
+		gensizeTF = new JTextField("200");
+		mutprobTF = new JTextField("0.5");
+		immigrantsTF = new JTextField("10");
 		timerTF = new JTextField("60000");
 		
-		
 
-		this.setLayout(new GridLayout(4,2));
+		this.setLayout(new GridLayout(5,2));
 		
 		this.add(gensizeL);
 		this.add(gensizeTF);
 		this.add(mutprobL);
 		this.add(mutprobTF);
+		this.add(immigrantsL);
+		this.add(immigrantsTF);
 		this.add(timerL);
 		this.add(timerTF);
 		this.add(runstepB);
@@ -84,7 +89,8 @@ public class OptionPanel extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 				if(!alg_initialized){
 					if(type.equals("Genetic")){
-						genalg = new Genetic(gp.getGraph(),Integer.parseInt(gensizeTF.getText()),Double.parseDouble(mutprobTF.getText()),Integer.parseInt(timerTF.getText()));
+						genalg = new Genetic(gp.getGraph(),Integer.parseInt(gensizeTF.getText()),
+								Double.parseDouble(mutprobTF.getText()),Integer.parseInt(immigrantsTF.getText()),Integer.parseInt(timerTF.getText()));
 						alg_initialized = true;
 					}
 				}
@@ -100,7 +106,12 @@ public class OptionPanel extends JPanel{
 		runallB.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Will launch a full run someday :D ");
+				if(type.equals("Genetic")){
+					genalg = new Genetic(gp.getGraph(),Integer.parseInt(gensizeTF.getText()),
+							Double.parseDouble(mutprobTF.getText()),Integer.parseInt(immigrantsTF.getText()),Integer.parseInt(timerTF.getText()));
+					alg_initialized = true;
+					gp.setPath(((PathChromosome) genalg.fullrun()).getPath());	
+				}
 			}
 	    });
 	}
