@@ -1,5 +1,5 @@
 package algcomp.alg;
-
+import algcomp.util.Function;
 import java.util.Random;
 
 public class FireflyAlg {
@@ -28,7 +28,7 @@ public class FireflyAlg {
 	public void Evaluate (Firefly fly, Firefly[] Fireflies, int numofflies, double abscoeff, double Attcoeff){
 		int j;
 		int id=fly.pos.getId();
-		fly.Intensity=Function(fly.pos.getX(),fly.pos.getY());
+		fly.Intensity=Function.bohachevsky(fly.pos.getX(),fly.pos.getY());
 		for (j=1;j<=numofflies;j++){
 			if (j==id){
 				Attractive[id][j]=0;
@@ -39,10 +39,6 @@ public class FireflyAlg {
 		
 		}
 	
-	private double Function(double x, double y){
-		return x*x+y*y; 
-		//This should be the intensity function
-		}
 	private void Initfireflies(Firefly[] firefliesArray,int numofflies,double abscoef, double Attcoeff){
 		Random r = new Random();
 		int i;
@@ -92,7 +88,7 @@ public class FireflyAlg {
 		
 	}
 	
-	private Firefly FullRun(Firefly[] Flies, double Abscoeff,int gridsize, int numofflies,double stepcoeff, double Attcoeff, int EvolutionTime){
+	public Firefly FullRun(Firefly[] Flies, double Abscoeff,int gridsize, int numofflies,double stepcoeff, double Attcoeff, int EvolutionTime){
 		int t=1;
 		Firefly Best;
 			for (t=1;t<=EvolutionTime;t++){
