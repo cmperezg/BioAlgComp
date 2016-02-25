@@ -1,12 +1,14 @@
 package algcomp.gui.main;
 
 import java.awt.BasicStroke;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.io.IOException;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import algcomp.util.Graph;
@@ -17,12 +19,17 @@ public class GraphPanel extends JPanel {
 	private Graph graph;
 	private int[] path;
 	private boolean hasPath;
+	JLabel distL;
+	double dist;
 	
 	
 	public GraphPanel(String gf) throws IOException{
 		super();
 		graph = new Graph(gf);
 		hasPath = false;
+		distL = new JLabel("Tour distance: ");
+		distL.setHorizontalAlignment(JLabel.RIGHT);
+		add(distL, BorderLayout.SOUTH);
 		repaint();
 		
 	}
@@ -42,11 +49,12 @@ public class GraphPanel extends JPanel {
 		return graph;
 	}
 
-	public void setPath(int[] _path){
+	public void setPath(int[] _path, double distance){
 		path = _path;
 		hasPath = true;
+		dist = distance;
 		//printArray(path);
-		removeAll();
+		//removeAll();
 		revalidate();
 		repaint();
 		
@@ -63,6 +71,7 @@ public class GraphPanel extends JPanel {
     {
 
 		super.paintComponent(g);
+		distL.setText("Tour distance: " + dist);
 		Graphics2D g2d = (Graphics2D)g;
 		g2d.setColor(Color.BLUE);
 		for(int i=0;i<graph.points.size();i++){

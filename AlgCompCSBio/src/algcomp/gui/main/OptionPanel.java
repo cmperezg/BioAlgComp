@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import algcomp.alg.Chromosome;
 import algcomp.alg.Genetic;
 import algcomp.alg.PathChromosome;
 
@@ -96,7 +97,8 @@ public class OptionPanel extends JPanel{
 				}
 					
 			if(type.equals("Genetic")){
-				gp.setPath(((PathChromosome) genalg.step()).getPath());	
+				PathChromosome s = ((PathChromosome) genalg.step());
+				gp.setPath(s.getPath(),s.getEval());	
 			}
 
 			}
@@ -110,7 +112,8 @@ public class OptionPanel extends JPanel{
 					genalg = new Genetic(gp.getGraph(),Integer.parseInt(gensizeTF.getText()),
 							Double.parseDouble(mutprobTF.getText()),Integer.parseInt(immigrantsTF.getText()),Integer.parseInt(timerTF.getText()));
 					alg_initialized = true;
-					gp.setPath(((PathChromosome) genalg.fullrun()).getPath());	
+					PathChromosome s = ((PathChromosome) genalg.fullrun());
+					gp.setPath(s.getPath(),s.getEval());	
 				}
 			}
 	    });
