@@ -12,8 +12,9 @@ public class FireflyAlg {
 	double Attcoeff;
 	Firefly[] current_generation;
 	double[][] Attractive;
+	Function f;
 	
-	public FireflyAlg(int _gridsize, int _EvolutionTime,int _numofflies, double _AbsCoeff,double _stepcoeff, double _Attcoeff)
+	public FireflyAlg(Function func,int _gridsize, int _EvolutionTime,int _numofflies, double _AbsCoeff,double _stepcoeff, double _Attcoeff)
 	{
 		gridsize=_gridsize;
 		EvolutionTime=_EvolutionTime;
@@ -23,12 +24,13 @@ public class FireflyAlg {
 		stepcoeff=_stepcoeff;
 		Initfireflies(current_generation,numofflies,AbsCoeff,Attcoeff);
 		InitAttractive(numofflies);
+		f = func;
 	}
 	
 	public void Evaluate (Firefly fly, Firefly[] Fireflies, int numofflies, double abscoeff, double Attcoeff){
 		int j;
 		int id=fly.pos.getId();
-		fly.Intensity=Function.bohachevsky(fly.pos.getX(),fly.pos.getY());
+		fly.Intensity=f.eval(fly.pos.getX(),fly.pos.getY());
 		for (j=1;j<=numofflies;j++){
 			if (j==id){
 				Attractive[id][j]=0;

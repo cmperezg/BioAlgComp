@@ -72,7 +72,14 @@ public class PathChromosome extends Chromosome {
 		public void mutate() {
 			Random random =  new Random();
 			int mutpoint = random.nextInt(numpoints-1);
+			int mutpoint2 = random.nextInt(numpoints-1);
 			int temp = 0;
+			
+//			temp = path[mutpoint];
+//			path[mutpoint] = path[mutpoint2];
+//			path[0] = temp;
+			
+			
 			if(mutpoint == numpoints-1){
 				temp = path[numpoints-1];
 				path[numpoints-1] = path[0];
