@@ -25,23 +25,23 @@ public class Function {
 			opty = 0;
 			optev = 0;
 		}else if(type.equals("Booth")){
-			rangex = 512;
-			rangey = 512;
-			optx =
-			opty = 
-			optev = 512;
+			rangex = 10;
+			rangey = 10;
+			optx = 1;
+			opty = 3;
+			optev = 0;
 		}else if(type.equals("Six Hump Camel")){
-			rangex = 512;
-			rangey = 512;
-			optx =
-			opty = 
+			rangex = 3;
+			rangey = 2;
+			optx = 0.0898;
+			opty = -0.7126;
 			optev = 512;
 		}else if(type.equals("Easom")){
-			rangex = 512;
-			rangey = 512;
-			optx =
-			opty = 
-			optev = 512;
+			rangex = 100;
+			rangey = 100;
+			optx = Math.PI;
+			opty = Math.PI;
+			optev = -1;
 		}
 	}
 	
