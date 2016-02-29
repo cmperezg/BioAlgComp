@@ -11,7 +11,9 @@ public class Function {
 	
 	
 	public Function(String _type){
+		
 		type = _type;
+		
 		if(type.equals("Eggholder")){
 			rangex = 512;
 			rangey = 512;
@@ -47,6 +49,36 @@ public class Function {
 	
 	
 	
+	public int getRangex() {
+		return rangex;
+	}
+
+
+
+	public int getRangey() {
+		return rangey;
+	}
+
+
+
+	public double getOptx() {
+		return optx;
+	}
+
+
+
+	public double getOpty() {
+		return opty;
+	}
+
+
+
+	public double getOptev() {
+		return optev;
+	}
+
+
+
 	public double eval(double x, double y){
 		double ret = 0.0;
 		if(type.equals("Eggholder")){
