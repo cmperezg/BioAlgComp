@@ -13,6 +13,7 @@ public class FireflyAlg {
 	Firefly[] current_generation;
 	double[][] Attractive;
 	Function f;
+	Firefly BestsoFar;
 	
 	public FireflyAlg(Function func,int _gridsize, int _EvolutionTime,int _numofflies, double _AbsCoeff,double _stepcoeff, double _Attcoeff)
 	{
@@ -29,7 +30,7 @@ public class FireflyAlg {
 	
 	public void Evaluate (Firefly fly, Firefly[] Fireflies, int numofflies, double abscoeff, double Attcoeff){
 		int j;
-		int id=fly.pos.getId();
+		int id=fly.getId();
 		fly.Intensity=f.eval(fly.pos.getX(),fly.pos.getY());
 		for (j=1;j<=numofflies;j++){
 			if (j==id){
@@ -47,7 +48,7 @@ public class FireflyAlg {
 		for (i=1;i<=numofflies; i++){
 			firefliesArray[i].pos.setx(r.nextInt(gridsize));
 			firefliesArray[i].pos.sety(r.nextInt(gridsize));
-			firefliesArray[i].pos.setId(i);
+			firefliesArray[i].setId(i);
 			Evaluate(firefliesArray[i],firefliesArray,numofflies,abscoef,Attcoeff);
 		}
 	}
@@ -75,28 +76,29 @@ public class FireflyAlg {
 		fly1.pos.setx(fly1.pos.getX()+Attcoeff*Math.exp(-Abscoeff*r*r)*(fly2.pos.getX()-fly1.pos.getX())+stepcoeff*(rand.nextFloat()-0.5));
 		fly1.pos.sety(fly1.pos.getY()+Attcoeff*Math.exp(-Abscoeff*r*r)*(fly2.pos.getY()-fly1.pos.getY())+stepcoeff*(rand.nextFloat()-0.5));
 	}
-	private void Step(Firefly[] Fly, double AbsCoeff, int gridsize, int numofflies, double stepcoeff,double Attcoeff){
+	public Firefly Step(){
 		int i,j;
 		for (i=1;i<= numofflies;i++){
 			for(j=1;j<=numofflies;j++){
-				if (Fly[j].Intensity>Fly[i].Intensity){
-					Move(Fly[i],Fly[j],stepcoeff,AbsCoeff,Attcoeff);
+				if (current_generation[j].Intensity>current_generation[i].Intensity){
+					Move(current_generation[i],current_generation[j],stepcoeff,AbsCoeff,Attcoeff);
 				}
 			}
 		}
 		for(i=1;i<=numofflies;i++){
-			Evaluate(Fly[i],Fly,numofflies,AbsCoeff,Attcoeff);
+			Evaluate(current_generation[i],current_generation,numofflies,AbsCoeff,Attcoeff);
 		}
 		
+		return FindBestSofar(current_generation);
 	}
 	
-	public Firefly FullRun(Firefly[] Flies, double Abscoeff,int gridsize, int numofflies,double stepcoeff, double Attcoeff, int EvolutionTime){
+	public Firefly FullRun(){
 		int t=1;
 		Firefly Best;
 			for (t=1;t<=EvolutionTime;t++){
-				Step (Flies,Abscoeff,gridsize,numofflies,stepcoeff, Attcoeff);
+				Step ();
 			}
-			Best=FindBestSofar(Flies);
+			Best=FindBestSofar(current_generation);
 		return Best;
 	}
 }

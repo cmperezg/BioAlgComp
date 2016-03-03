@@ -4,11 +4,9 @@ public class Dpoint {
 	
 	private double x;
 	private double y;
-	private int id;
 	
 	
-	public Dpoint(int nid,double nx, double ny){
-		id = nid;
+	public Dpoint(double nx, double ny){
 		x = nx;
 		y = ny;
 	}
@@ -18,12 +16,8 @@ public class Dpoint {
 	public double getY() {
 		return y;
 	}
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
+	
+	
 	
 	public void setx(double x) {
 		this.x = x;
