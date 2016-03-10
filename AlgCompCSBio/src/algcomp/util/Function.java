@@ -10,6 +10,12 @@ public class Function {
 	double optev;
 	
 	
+	public String getType() {
+		return type;
+	}
+
+
+
 	public Function(String _type){
 		
 		type = _type;
@@ -163,10 +169,10 @@ public class Function {
 	
 //	public static void main(String[] args){
 //		System.out.println(eggholder(512,404.2319));
-//		System.out.println(bohachevsky(0,0));
-//		System.out.println(booth(1,3));
-//		System.out.println(sixHumpCamel(0.0898,-0.7126));
-//		System.out.println(easom(Math.PI,Math.PI));
+////		System.out.println(bohachevsky(0,0));
+////		System.out.println(booth(1,3));
+////		System.out.println(sixHumpCamel(0.0898,-0.7126));
+////		System.out.println(easom(Math.PI,Math.PI));
 //	}
 
 }

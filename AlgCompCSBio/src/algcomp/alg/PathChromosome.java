@@ -3,12 +3,17 @@ package algcomp.alg;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class PathChromosome extends Chromosome {
+public class PathChromosome{
 	//representation of the solution: a tour.
 		
 		int numpoints;
 		int[] path;
-
+		double eval;
+		
+		//for probability of selection (roulette method)
+		double from;
+		double to;
+		double prob;
 		
 		// first generation constructor. random.
 		public PathChromosome(int num){
@@ -28,20 +33,14 @@ public class PathChromosome extends Chromosome {
 			path = _path;
 		}
 		
-		public double getEval() {
-			return eval;
-		}
-
-		public void setEval(double eval) {
-			this.eval = eval;
-		}
+	
 
 		public int[] getPath() {
 			return path;
 		}
 		
-		@Override
-		public Chromosome crossover(Chromosome c) {
+
+		public PathChromosome crossover(PathChromosome c) {
 			//System.out.println("NEW CROSSOVER");
 			Random r = new Random();
 			int xpoint = r.nextInt(numpoints);
@@ -64,11 +63,10 @@ public class PathChromosome extends Chromosome {
 				xpoint++;
 			}
 			//printArray(newpath);
-			Chromosome ret = new PathChromosome(numpoints,newpath);
+			PathChromosome ret = new PathChromosome(numpoints,newpath);
 			return ret;
 		}
-		
-		@Override
+
 		public void mutate() {
 			Random random =  new Random();
 			int mutpoint = random.nextInt(numpoints-1);
@@ -140,7 +138,31 @@ public class PathChromosome extends Chromosome {
 
 
 		
-
+		
+		public double getFrom() {
+			return from;
+		}
+		public void setFrom(double from) {
+			this.from = from;
+		}
+		public double getTo() {
+			return to;
+		}
+		public void setTo(double to) {
+			this.to = to;
+		}
+		public double getProb() {
+			return prob;
+		}
+		public void setProb(double prob) {
+			this.prob = prob;
+		}
+		public double getEval() {
+			return eval;
+		}
+		public void setEval(double eval) {
+			this.eval = eval;
+		}
 		
 
 }

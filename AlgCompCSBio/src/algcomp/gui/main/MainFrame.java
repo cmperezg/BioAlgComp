@@ -19,7 +19,7 @@ public class MainFrame {
 		JFrame frame = new JFrame("Algorithm Comparison");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
-        fixedop = new FixedOptionPanel();
+        fixedop = new FixedOptionPanel(this);
         allop = new JPanel();
         
         JPanel mainpanel = new JPanel();

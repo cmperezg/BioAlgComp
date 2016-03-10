@@ -5,18 +5,22 @@ import java.util.Random;
 import algcomp.util.*;
 
 //Will only work for minimization problems.... shortest tour or minimum of a function.
-public class Genetic {
+public class GeneticTSP {
+	
+	
+	
+	
+
 	Graph gr;
 	int gensize;
 	double mutprob;
 	int immigrants;
 	int timer;
 	int gencounter;
-	boolean graphprob;
 	
-	Chromosome bestsofar;
+	PathChromosome bestsofar;
 	
-	Chromosome[] current_generation;
+	PathChromosome[] current_generation;
 	
 	
 
@@ -30,17 +34,16 @@ public class Genetic {
 	 * if sbs is false and timer is not zero, timer will be the time in ms for which the alg. will run.
 	 * otherwise it will run until the best path remains constant for constantcount generations.
 	 */
-	public Genetic(Graph _gr,int _gensize, double _mutprob,int _immi, int _timer){
+	public GeneticTSP(Graph _gr,int _gensize, double _mutprob,int _immi, int _timer){
 		gr = _gr;
 		gensize = _gensize;
 		mutprob = _mutprob;
 		immigrants = _immi;
 		timer = _timer;
-		//if a graph is sent as a parameter, it is a graph problem...
-		graphprob = true;
+
 		//just a random chromosome... probably not the best thing to do.
 		bestsofar = new PathChromosome(gr.size());
-		evaluate((PathChromosome)bestsofar);
+		evaluate(bestsofar);
 		System.out.println("firstbest: " +bestsofar.getEval());
 		//initialize first generation
 		current_generation = new PathChromosome[gensize];
@@ -48,12 +51,13 @@ public class Genetic {
 			current_generation[i] = new PathChromosome(gr.size());
 		}
 	}
+
 	
 	/*
 	 * This will actually return the best chromosome for the previous generation.
 	 * Generation created in this step will not be evaluated until next step is run.
 	 */
-	public Chromosome step(){
+	public PathChromosome step(){
 		evaluateGeneration();
 		System.out.println("BEST NOW: " + bestsofar.toString());
 		
@@ -61,16 +65,19 @@ public class Genetic {
 		Random r = new Random();
 		int created = 0;
 		double probscore;
-		Chromosome[] newgen = new PathChromosome[gensize];
+		PathChromosome[] newgen;
+		
+		newgen = new PathChromosome[gensize];
+		 
 		//System.out.println("NEWGEN");
 		while(created < gensize-immigrants){
 			//select first parent
 			 probscore= r.nextDouble();
-			 Chromosome p1 = getChByProb(probscore);
+			 PathChromosome p1 = getChByProb(probscore);
 			 probscore= r.nextDouble();
-			 Chromosome p2 = getChByProb(probscore);
+			 PathChromosome p2 = getChByProb(probscore);
 			 
-			 Chromosome nc = p1.crossover(p2);
+			 PathChromosome nc = p1.crossover(p2);
 			 
 			 //mutate with mutprob probability
 			 probscore= r.nextDouble();
@@ -83,7 +90,10 @@ public class Genetic {
 		}
 		//add a random guys every generation, to keep things moving
 		for(int i =1;i<=immigrants;i++){
+			
 			newgen[gensize-i]=new PathChromosome(gr.size());
+			
+			
 		}
 		
 		current_generation = newgen;
@@ -94,7 +104,7 @@ public class Genetic {
 	}
 	
 	//full run stopped by timer
-	public Chromosome fullrun(){
+	public PathChromosome fullrun(){
 		final Thread thisThread = Thread.currentThread();
 		final int timeToRun = timer; // 1200 = 2 minutes;
 
@@ -117,6 +127,7 @@ public class Genetic {
 		return bestsofar;
 	}
 	
+	
 	//evaluate each chromosome and set selection probabilities.
 	public void evaluateGeneration(){
 		double fitness_sum = 0.0;
@@ -124,7 +135,9 @@ public class Genetic {
 		double fmax = 0.0; 
 
 		for(int i = 0;i<current_generation.length;i++){
-			evaluate((PathChromosome) current_generation[i]);
+
+				evaluate(current_generation[i]);
+			
 			if(current_generation[i].getEval() > fmax){
 				fmax = current_generation[i].getEval();
 			}
@@ -138,7 +151,7 @@ public class Genetic {
 		
 		//extra step needed to process for minimization function. roulette method is natural for maximization.
 		for(int i = 0;i<current_generation.length;i++){
-			double x = ((PathChromosome) current_generation[i]).getEval();
+			double x = current_generation[i].getEval();
 			double fp = fmax-x;
 			fitness_sum = fitness_sum + fp;
 
@@ -149,7 +162,7 @@ public class Genetic {
 			current_generation[i].setFrom(prob_counter);
 			prob_counter = prob_counter + current_generation[i].getProb();
 			current_generation[i].setTo(prob_counter);
-			
+			System.out.println(current_generation[i].toString());
 			//System.out.println(current_generation[i].toString());
 		}
 		
@@ -169,7 +182,9 @@ public class Genetic {
 		return ev;
 	}
 	
-	public Chromosome getChByProb(double prob){
+
+	
+	public PathChromosome getChByProb(double prob){
 		for( int i= 0;i<gensize;i++){
 			if(prob >= current_generation[i].getFrom() & prob < current_generation[i].getTo()){
 				return current_generation[i];
@@ -186,6 +201,7 @@ public class Genetic {
 			System.out.print(arr[i]+",");
 		}
 	}
+
 	
 }
 

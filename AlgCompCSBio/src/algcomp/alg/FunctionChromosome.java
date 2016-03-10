@@ -4,8 +4,15 @@ import java.util.Random;
 
 import algcomp.util.Function;
 
-public class FunctionChromosome extends Chromosome {
+public class FunctionChromosome{
 
+	double eval;
+	
+	//for probability of selection (roulette method)
+	double from;
+	double to;
+	double prob;
+	
 	char[] fullch; //signx x decx signy y decy
 	Function f;
 	int bitsfordecimals = 14; // 9999
@@ -15,6 +22,8 @@ public class FunctionChromosome extends Chromosome {
 	double x;
 	double y;
 	Random r;
+	
+	boolean feasible;
 	
 	public FunctionChromosome(Function _f){
 		r = new Random();
@@ -39,7 +48,7 @@ public class FunctionChromosome extends Chromosome {
 		chToDecimal();
 	}
 	
-	@Override
+
 	public void mutate() {
 		int mutpoint = r.nextInt(fullch.length);
 		if(fullch[mutpoint]==Integer.toString(1).charAt(0)){
@@ -47,11 +56,11 @@ public class FunctionChromosome extends Chromosome {
 		}else{
 			fullch[mutpoint]=Integer.toString(1).charAt(0);
 		}
-
+		chToDecimal();
 	}
 
-	@Override
-	public Chromosome crossover(Chromosome c) {
+
+	public FunctionChromosome crossover(FunctionChromosome c) {
 		
 		int xpoint = r.nextInt(fullch.length);
 		char[] newch = new char[fullch.length];
@@ -59,7 +68,7 @@ public class FunctionChromosome extends Chromosome {
 		for(int i=0 ; i<xpoint; i++){
 			newch[i] = fullch[i];
 		}
-		char[] cch = ((FunctionChromosome)c).getFullch();
+		char[] cch = c.getFullch();
 		
 		for(int i=xpoint ; i<cch.length; i++){
 			newch[i] = cch[i];
@@ -73,7 +82,7 @@ public class FunctionChromosome extends Chromosome {
 	}
 
 	void chToDecimal(){
-
+		feasible = true;
 		String s = new String(fullch);
 		int accum = 0;
 		int accum2 = 0;
@@ -85,10 +94,11 @@ public class FunctionChromosome extends Chromosome {
 		String sdx = s.substring(accum,accum2);
 		
 		int xp1 = Integer.parseInt(sx, 2);
-		//flip first bit, it's too big
+		//solution out of range
 		if(xp1+(Integer.parseInt(sdx, 2)/decdiv)>f.getRangex()){
-			sx = "0"+sx.substring(1);
-			xp1 = Integer.parseInt(sx, 2);
+//			sx = "0"+sx.substring(1);
+//			xp1 = Integer.parseInt(sx, 2);
+			feasible = false;
 		}
 
 		accum = accum2;
@@ -100,10 +110,11 @@ public class FunctionChromosome extends Chromosome {
 		String sdy = s.substring(accum,accum2);
 
 		int yp1 = Integer.parseInt(sy, 2);
-		//flip first bit, it's too big
+		//solution out of range
 		if(yp1+(Integer.parseInt(sdy, 2)/decdiv)>f.getRangey()){
-			sy = "0"+sy.substring(1);
-			yp1 = Integer.parseInt(sy, 2);
+//			sy = "0"+sy.substring(1);
+//			yp1 = Integer.parseInt(sy, 2);
+			feasible = false;
 		}
 		
 		x = xp1 +(Integer.parseInt(sdx, 2)/decdiv);
@@ -118,16 +129,51 @@ public class FunctionChromosome extends Chromosome {
 		
 	}
 
+	public boolean isFeasible() {
+		return feasible;
+	}
+
 	static int bitsneeded(double x){
 		double log = Math.log(x) / Math.log(2);
-		if(log % 1 == 0){
-			return (int)Math.ceil(log)+1;
-		}
+		
 		return (int)Math.ceil(log);
 	}
 	
 	public String toString(){
-		return x + " , " + y;
+		return "x: " + x + " , y: " + y+ " , ev: " + eval+" , from: " + from+" , to: " + to;
+	}
+
+	public double getX() {
+		return x;
+	}
+
+	public double getY() {
+		return y;
+	}
+	
+	public double getFrom() {
+		return from;
+	}
+	public void setFrom(double from) {
+		this.from = from;
+	}
+	public double getTo() {
+		return to;
+	}
+	public void setTo(double to) {
+		this.to = to;
+	}
+	public double getProb() {
+		return prob;
+	}
+	public void setProb(double prob) {
+		this.prob = prob;
+	}
+	public double getEval() {
+		return eval;
+	}
+	public void setEval(double eval) {
+		this.eval = eval;
 	}
 	
 	

@@ -11,8 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-import algcomp.alg.Chromosome;
-import algcomp.alg.Genetic;
+import algcomp.alg.GeneticTSP;
 import algcomp.alg.PathChromosome;
 
 
@@ -21,7 +20,7 @@ public class OptionPanel extends JPanel{
 	GraphPanel gp;
 	
 	
-	Genetic genalg;
+	GeneticTSP genalg;
 	boolean alg_initialized;
 	
 	//genetic
@@ -90,7 +89,7 @@ public class OptionPanel extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 				if(!alg_initialized){
 					if(type.equals("Genetic")){
-						genalg = new Genetic(gp.getGraph(),Integer.parseInt(gensizeTF.getText()),
+						genalg = new GeneticTSP(gp.getGraph(),Integer.parseInt(gensizeTF.getText()),
 								Double.parseDouble(mutprobTF.getText()),Integer.parseInt(immigrantsTF.getText()),Integer.parseInt(timerTF.getText()));
 						alg_initialized = true;
 					}
@@ -109,7 +108,7 @@ public class OptionPanel extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(type.equals("Genetic")){
-					genalg = new Genetic(gp.getGraph(),Integer.parseInt(gensizeTF.getText()),
+					genalg = new GeneticTSP(gp.getGraph(),Integer.parseInt(gensizeTF.getText()),
 							Double.parseDouble(mutprobTF.getText()),Integer.parseInt(immigrantsTF.getText()),Integer.parseInt(timerTF.getText()));
 					alg_initialized = true;
 					PathChromosome s = ((PathChromosome) genalg.fullrun());
