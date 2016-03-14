@@ -23,8 +23,9 @@ public class FireflyAlg {
 		AbsCoeff=_AbsCoeff;
 		Attcoeff=_Attcoeff;
 		stepcoeff=_stepcoeff;
-		Initfireflies(current_generation,numofflies,AbsCoeff,Attcoeff);
 		InitAttractive(numofflies);
+		Initfireflies(current_generation,numofflies,AbsCoeff,Attcoeff);
+		
 		f = func;
 	}
 	
