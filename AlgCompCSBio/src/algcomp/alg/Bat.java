@@ -5,17 +5,33 @@ import algcomp.util.Dpoint;
 public class Bat {
 
 	Dpoint position;
-	Dpoint bestposition;
 	Dpoint newposition;
 	Dpoint velocity; //x = velocity for x
 	
+	double eval;
+	int id;
+	public int getId() {
+		return id;
+	}
+
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+
+	public String toString(){
+		return "x: " + position.getX() + " y: " + position.getY()+ " ev: " + eval;
+	}
 	
-	public Dpoint getBestposition() {
-		return bestposition;
+	
+	public double getEval() {
+		return eval;
 	}
-	public void setBestposition(Dpoint bestposition) {
-		this.bestposition = bestposition;
+	public void setEval(double eval) {
+		this.eval = eval;
 	}
+
 	public Dpoint getNewposition() {
 		return newposition;
 	}
@@ -28,11 +44,7 @@ public class Bat {
 	public void setVelocity(Dpoint velocity) {
 		this.velocity = velocity;
 	}
-	double f; //pulse frequency
-	double r; //pulse rates
-	double a; //loudness
-	
-	
+
 	
 	
 	public Dpoint getPosition() {
@@ -41,24 +53,8 @@ public class Bat {
 	public void setPosition(Dpoint position) {
 		this.position = position;
 	}
-	public double getF() {
-		return f;
-	}
-	public void setF(double f) {
-		this.f = f;
-	}
-	public double getR() {
-		return r;
-	}
-	public void setR(double r) {
-		this.r = r;
-	}
-	public double getA() {
-		return a;
-	}
-	public void setA(double a) {
-		this.a = a;
-	}
+
+
 	
 	
 	
