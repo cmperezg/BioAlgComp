@@ -55,7 +55,7 @@ public class BatAlgorithmFunction {
 			bats_loudness[i] = rand.nextDouble()*max_loudness;
 		}
 				
-		
+		bats_pulse_rate = initial_bats_pulse_rate;
 		iteration = 0;
 		
 		bestbat = new Bat();
@@ -70,25 +70,28 @@ public class BatAlgorithmFunction {
 		
 		bestbat = getBest();
 		average_loudness = mean(bats_loudness);
-		
+		updateBats();
 		for(int i = 0; i<bats_list.length; i++){
 			if(rand.nextDouble() > bats_pulse_rate[i]){
 				double random = (rand.nextDouble()*2)-1;
-				
-				bats_list[i].setNewposition(new Dpoint(bestbat.getPosition().getX()+(random*average_loudness),bestbat.getPosition().getY()+pom()*(random*average_loudness)));
+				System.out.println("herew");
+				bats_list[i].setNewposition(new Dpoint(bestbat.getPosition().getX()+(random*average_loudness),bestbat.getPosition().getY()+(random*average_loudness)));
+			}else{
+				bats_list[i].setNewposition(new Dpoint(bats_list[i].getPosition().getX()+rand.nextDouble(),bats_list[i].getPosition().getY()+rand.nextDouble()));
 			}
-			bats_list[i].setNewposition(new Dpoint(bats_list[i].getNewposition().getX()+rand.nextDouble(),bats_list[i].getNewposition().getY()+pom()*rand.nextDouble()));
 			
+			bats_list[i].setEval(f.eval(bats_list[i].getPosition().getX(), bats_list[i].getPosition().getY()));	
 			if(rand.nextDouble()*max_loudness < bats_loudness[i]
 					& (f.eval(bats_list[i].getNewposition().getX(), bats_list[i].getNewposition().getY())
-					<= f.eval(bats_list[i].getPosition().getX(), bats_list[i].getPosition().getY()))
+					<= bats_list[i].getEval())
 					& isInRange(bats_list[i].getNewposition())){
 				bats_list[i].setPosition(bats_list[i].getNewposition());
+				bats_list[i].setEval(f.eval(bats_list[i].getPosition().getX(), bats_list[i].getPosition().getY()));	
 				bats_loudness[i] = updateLoudness(bats_loudness[i]);
 				bats_pulse_rate[i] = updatePulseRate(initial_bats_pulse_rate[i]);
 				
 			}
-			bats_list[i].setEval(f.eval(bats_list[i].getNewposition().getX(), bats_list[i].getNewposition().getY()));			
+					
 			if(bats_list[i].getEval()
 					< f.eval(bestbat.getPosition().getX(), bestbat.getPosition().getY())
 					& isInRange(bats_list[i].getNewposition())){
@@ -96,7 +99,7 @@ public class BatAlgorithmFunction {
 			}
 		}
 		iteration++;
-		System.out.println(bestbat.toString());
+		System.out.println("bestbat" + bestbat.toString());
 		return bestbat;
 	}
 	
@@ -115,12 +118,11 @@ public class BatAlgorithmFunction {
 	
 	
 	void initBat(Bat b){
-
-		b.setNewposition(new Dpoint(pom()*rand.nextInt(f.getRangex()),pom()*rand.nextInt(f.getRangey())));
-		b.setPosition(new Dpoint(pom()*rand.nextInt(f.getRangex()),pom()*rand.nextInt(f.getRangey())));
-		b.setVelocity(new Dpoint(pom()*rand.nextInt(f.getRangex()),pom()*rand.nextInt(f.getRangey())));
+		b.setNewposition(new Dpoint(rand.nextInt(f.getRangex()),rand.nextInt(f.getRangey())));
+		b.setPosition(new Dpoint(rand.nextInt(f.getRangex()),rand.nextInt(f.getRangey())));
+		b.setVelocity(new Dpoint(rand.nextInt(f.getRangex()),rand.nextInt(f.getRangey())));
 		
-		b.setEval(f.eval(b.getNewposition().getX(),b.getNewposition().getY()));
+		b.setEval(f.eval(b.getPosition().getX(),b.getPosition().getY()));
 
 		
 	}
@@ -188,5 +190,14 @@ public class BatAlgorithmFunction {
 	        sum += m[i];
 	    }
 	    return sum / m.length;
+	}
+	
+	void updateBats(){
+		updateFrequency();
+		for(int i = 0; i<numbats; i++){
+			updateVelocity(bats_list[i]);
+			//updatePosition(bats_list[i]);
+			//System.out.println(bats_list[i].toString());
+		}
 	}
 }
