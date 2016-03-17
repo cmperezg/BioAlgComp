@@ -11,7 +11,7 @@ import algcomp.alg.EggTSP;
 import algcomp.alg.FireflyAlg;
 import algcomp.alg.GeneticFunc;
 import algcomp.alg.GeneticTSP;
-import algcomp.alg.PSO;
+//import algcomp.alg.PSO;
 import algcomp.alg.TSPFireflyAlg;
 import algcomp.util.Function;
 import algcomp.util.Graph;
@@ -22,7 +22,10 @@ public class MainTester {
 	public static void main(String[] args){
 		
 		//Function f = new Function("Bohachevsky");
-		Function f = new Function("Eggholder");
+		//Function f = new Function("Eggholder");
+		//Function f= new Function("Booth");
+		//Function f= new Function("Six Hump Camel");
+		Function f= new Function("Easom");
 //		System.out.println("rangex: " + f.getRangex() + " rangey: " + f.getRangey()
 //		+ " opt: " + f.getOptev());
 //		GeneticFunc gen = new GeneticFunc(f,100,0.6,10,0.001);
@@ -61,8 +64,8 @@ public class MainTester {
 //		TSPFireflyAlg fa = new TSPFireflyAlg(g, 50,60000,0.5,0.5);
 //		fa.fullrun();
 		
-		FireflyAlg fa = new FireflyAlg(f,512,512,5000,30,0.5,0.5,0.5);
-		fa.FullRun();
+	//	FireflyAlg fa = new FireflyAlg(f,0.001,100,0.5,0.8,1);
+	//	fa.FullRun();
 	}
 
 	

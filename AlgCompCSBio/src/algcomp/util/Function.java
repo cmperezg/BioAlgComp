@@ -43,7 +43,7 @@ public class Function {
 			rangey = 2;
 			optx = 0.0898;
 			opty = -0.7126;
-			optev = 512;
+			optev = -1.0316;
 		}else if(type.equals("Easom")){
 			rangex = 100;
 			rangey = 100;

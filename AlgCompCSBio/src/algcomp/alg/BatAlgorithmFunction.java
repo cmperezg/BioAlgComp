@@ -79,7 +79,7 @@ public class BatAlgorithmFunction {
 				
 				double random = (rand.nextDouble()*2)-1;
 				double random2 = (rand.nextDouble()*2)-1;
-				System.out.println("herew");
+				//System.out.println("herew");
 				bats_list[i].setNewposition(new Dpoint(bestbat.getPosition().getX()+(random*average_loudness),bestbat.getPosition().getY()+(random2*average_loudness)));
 			}else{
 				bats_list[i].setNewposition(new Dpoint(bats_list[i].getPosition().getX()+bats_list[i].getVelocity().getX(),bats_list[i].getPosition().getY()+bats_list[i].getVelocity().getY()));
@@ -139,9 +139,11 @@ public class BatAlgorithmFunction {
 	}
 	
 	void updateVelocity(Bat b){
-		double velx = b.getVelocity().getX()+bats_pulse_frequency[b.getId()]*((b.getPosition().getX()-bestbat.getPosition().getX()*bats_pulse_frequency[b.getId()]));
-		double vely = b.getVelocity().getY()+bats_pulse_frequency[b.getId()]*((b.getPosition().getY()-bestbat.getPosition().getY()*bats_pulse_frequency[b.getId()]));
+		//double velx = b.getVelocity().getX()+bats_pulse_frequency[b.getId()]*((b.getPosition().getX()-bestbat.getPosition().getX()*bats_pulse_frequency[b.getId()]));
+		//double vely = b.getVelocity().getY()+bats_pulse_frequency[b.getId()]*((b.getPosition().getY()-bestbat.getPosition().getY()*bats_pulse_frequency[b.getId()]));
 		
+		double velx = b.getVelocity().getX()+(b.getPosition().getX()-bestbat.getPosition().getX())*bats_pulse_frequency[b.getId()];
+		double vely = b.getVelocity().getY()+(b.getPosition().getY()-bestbat.getPosition().getY())*bats_pulse_frequency[b.getId()];
 		b.setVelocity(new Dpoint(velx,vely));
 	}
 	
