@@ -8,8 +8,11 @@ import algcomp.alg.CuckooSearchFunction;
 import algcomp.alg.CuckooSearchTSP;
 import algcomp.alg.Egg;
 import algcomp.alg.EggTSP;
+import algcomp.alg.FireflyAlg;
 import algcomp.alg.GeneticFunc;
 import algcomp.alg.GeneticTSP;
+import algcomp.alg.PSO;
+import algcomp.alg.TSPFireflyAlg;
 import algcomp.util.Function;
 import algcomp.util.Graph;
 
@@ -18,7 +21,8 @@ public class MainTester {
 	
 	public static void main(String[] args){
 		
-		Function f = new Function("Bohachevsky");
+		//Function f = new Function("Bohachevsky");
+		Function f = new Function("Eggholder");
 //		System.out.println("rangex: " + f.getRangex() + " rangey: " + f.getRangey()
 //		+ " opt: " + f.getOptev());
 //		GeneticFunc gen = new GeneticFunc(f,100,0.6,10,0.001);
@@ -35,7 +39,7 @@ public class MainTester {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
-//		
+////		
 //		CuckooSearchTSP sct = new CuckooSearchTSP(g,15,0.25,60000);
 //		EggTSP e = sct.fullrun();
 //		System.out.println(e.toString());
@@ -48,8 +52,17 @@ public class MainTester {
 //		sct.evaluate(e);
 //		System.out.println(e.toString());
 		
-		BatAlgorithmFunction baf = new BatAlgorithmFunction(f,300,.001);
-		Bat b = baf.fullrun();
+//		BatAlgorithmFunction baf = new BatAlgorithmFunction(f,300,.001);
+//		Bat b = baf.fullrun();
+		
+//		PSO pso = new PSO(f, 100,.01);
+//		pso.fullrun();
+		
+//		TSPFireflyAlg fa = new TSPFireflyAlg(g, 50,60000,0.5,0.5);
+//		fa.fullrun();
+		
+		FireflyAlg fa = new FireflyAlg(f,512,512,5000,30,0.5,0.5,0.5);
+		fa.FullRun();
 	}
 
 	

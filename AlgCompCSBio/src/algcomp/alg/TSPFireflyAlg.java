@@ -20,6 +20,9 @@ public class TSPFireflyAlg {
 	Attcoeff=_Attcoeff;
 	Abscoeff=_Abscoeff;
 	EvolutionTime=_evTime;
+	
+	Attractive = new double[gensize][gensize];
+	PathDistance = new int[gensize][gensize];
 	current_generation = new TSPfly[gensize];
 	for(int i=0;i<gensize;i++){
 		current_generation[i] = new TSPfly(gr.size());
@@ -51,7 +54,7 @@ public class TSPFireflyAlg {
 	public double evaluatedist(TSPfly fp) {
 		double ev = 0.0;
 		//printArray(path);
-		for(int i=0; i<gensize-1;i++){
+		for(int i=0; i<fp.getPath().length-1;i++){
 			ev = ev + gr.getPoint(fp.path[i]).distanceTo(gr.getPoint(fp.path[i+1]));
 		}
 		return ev;
@@ -60,7 +63,7 @@ public class TSPFireflyAlg {
 	private void Moveitoj(int i, int j){
 		Random rand=new Random();
 		int k;
-		int r=rand.nextInt(gensize);
+		int r=rand.nextInt(current_generation[i].getPath().length);
 		int oldval= current_generation[i].path[r];
 		int newval = current_generation[j].path[r];
 		for (k=0;k<gensize;k++){
@@ -84,8 +87,8 @@ public class TSPFireflyAlg {
 	private int SinglePathDist(TSPfly flyA,TSPfly flyB){
 		int i,j;
 		int Dist=0;
-		for(i=0;i<gensize-1;i++){
-			for (j=0;j<gensize-1;j++){
+		for(i=0;i<flyA.getPath().length-1;i++){
+			for (j=0;j<flyA.getPath().length-1;j++){
 				if(flyA.path[i]!=flyB.path[j] || flyA.path[i+1]!=flyB.path[j+1] ){
 					Dist=Dist+1;
 				}
@@ -101,6 +104,7 @@ public class TSPFireflyAlg {
 			if (current_generation[i].Intensity > Best.Intensity)
 				Best=current_generation[i];
 		}
+		System.out.println(Best.toString());
 		return Best;
 		
 	}
@@ -117,11 +121,32 @@ public class TSPFireflyAlg {
 		
 		return FindBestSofar();
 	}
-	
+	public TSPfly fullrun(){
+		final Thread thisThread = Thread.currentThread();
+		final int timeToRun = EvolutionTime; // 1200 = 2 minutes;
+
+		new Thread(new Runnable() {
+		    public void run() {
+		        try {
+					thisThread.sleep(timeToRun);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+					System.out.println("Problem with putting thread to sleep");
+				}
+		        thisThread.interrupt();
+		    }
+		}).start();
+
+		while (!Thread.interrupted()) {
+		    Step();
+		}
+		
+		return BestSoFar;
+	}
 	private void InitAttractive(){
 		int i,j;
-		for (i=1;i<=gensize; i++){
-			for(j=1;j<=gensize;j++){
+		for (i=0;i<gensize; i++){
+			for(j=0;j<gensize;j++){
 				Attractive[i][j]=0;
 			}	
 		}

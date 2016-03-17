@@ -78,7 +78,7 @@ public class CuckooSearchTSP {
 				}
 			}
 		}
-		//System.out.println(bestegg.toString());
+		System.out.println(bestegg.toString());
 		return bestegg;
 	}
 	

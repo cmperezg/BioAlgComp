@@ -25,10 +25,14 @@ public class FireflyAlg {
 		AbsCoeff=_AbsCoeff;
 		Attcoeff=_Attcoeff;
 		stepcoeff=_stepcoeff;
+		Attractive = new double[numofflies][numofflies];
+		current_generation = new Firefly[numofflies];
 		InitAttractive(numofflies);
 		Initfireflies(current_generation,numofflies,AbsCoeff,Attcoeff);
 		
 		f = func;
+		
+		
 	}
 	
 	public void Evaluate (Firefly fly, Firefly[] Fireflies, int numofflies, double abscoeff, double Attcoeff){
@@ -48,7 +52,7 @@ public class FireflyAlg {
 	private void Initfireflies(Firefly[] firefliesArray,int numofflies,double abscoef, double Attcoeff){
 		Random r = new Random();
 		int i;
-		for (i=1;i<=numofflies; i++){
+		for (i=0;i<numofflies; i++){
 			firefliesArray[i].pos.setx(r.nextInt(gridsize));
 			firefliesArray[i].pos.sety(r.nextInt(gridsize));
 			firefliesArray[i].setId(i);
@@ -57,8 +61,8 @@ public class FireflyAlg {
 	}
 	private void InitAttractive(int numofflies){
 		int i,j;
-		for (i=1;i<=numofflies; i++){
-			for(j=1;j<=numofflies;j++){
+		for (i=0;i<numofflies; i++){
+			for(j=0;j<numofflies;j++){
 				Attractive[i][j]=0;
 			}	
 		}
@@ -70,6 +74,7 @@ public class FireflyAlg {
 			if (FlyArray[i].Intensity > Best.Intensity)
 				Best=FlyArray[i];
 		}
+		System.out.println(Best.toString());
 		return Best;
 		
 	}

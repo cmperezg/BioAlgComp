@@ -34,6 +34,8 @@ public class Firefly {
 			Intensity = intensity;
 		}
 		
-		
+		public String toString(){
+			return "x: "+ pos.getX() + " y: " + pos.getY() + " eval: "+ Intensity;
+		}
 
 }

@@ -7,6 +7,7 @@ public class TSPfly {
 	int [] path;
 	double Intensity;
 
+
 	
 	public TSPfly(int num){
 		numofpoints = num;
@@ -18,6 +19,9 @@ public class TSPfly {
 		shuffleArray(path);   
 		//printArray(path);
 	}
+	
+
+
 	private void shuffleArray(int[] array)
 	{
 	    int index;
@@ -33,4 +37,20 @@ public class TSPfly {
 	        }
 	    }
 	}
+	
+	public String toString(){
+		String ret = "";
+		for(int i = 0;i<path.length;i++){
+			System.out.print(path[i]+",");
+		}
+		
+		return ret+ " eval: " + Intensity;
+	}
+
+
+
+	public int[] getPath() {
+		return path;
+	}
+	
 }
