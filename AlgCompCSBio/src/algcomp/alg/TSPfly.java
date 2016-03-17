@@ -15,7 +15,7 @@ public class TSPfly {
 		for(int i = 0; i<numofpoints;i++){
 			path[i] = i;
 		}
-		shuffleArray(path);
+		shuffleArray(path);   
 		//printArray(path);
 	}
 	private void shuffleArray(int[] array)

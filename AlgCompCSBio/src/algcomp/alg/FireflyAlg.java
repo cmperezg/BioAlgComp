@@ -5,6 +5,7 @@ import java.util.Random;
 public class FireflyAlg {
 	
 	int gridsize;
+	int gridsizeY;
 	double stepcoeff;
 	int EvolutionTime;
 	int numofflies;
@@ -15,9 +16,10 @@ public class FireflyAlg {
 	Function f;
 	Firefly BestsoFar;
 	
-	public FireflyAlg(Function func,int _gridsize, int _EvolutionTime,int _numofflies, double _AbsCoeff,double _stepcoeff, double _Attcoeff)
+	public FireflyAlg(Function func,int _gridsize,int _gridsizeY, int _EvolutionTime,int _numofflies, double _AbsCoeff,double _stepcoeff, double _Attcoeff)
 	{
 		gridsize=_gridsize;
+		gridsizeY=_gridsizeY;
 		EvolutionTime=_EvolutionTime;
 		numofflies=_numofflies;
 		AbsCoeff=_AbsCoeff;
