@@ -64,8 +64,13 @@ public class MainTester {
 //		TSPFireflyAlg fa = new TSPFireflyAlg(g, 50,60000,0.5,0.5);
 //		fa.fullrun();
 		
+
 	//	FireflyAlg fa = new FireflyAlg(f,0.001,100,0.5,0.8,1);
 	//	fa.FullRun();
+
+		FireflyAlg fa = new FireflyAlg(f,0.001,100,0.5,0.8,1);
+		fa.FullRun();
+
 	}
 
 	

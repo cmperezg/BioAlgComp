@@ -5,9 +5,9 @@ public class Firefly {
 	int id;
 	double Intensity;
 	
-		public Firefly(Dpoint _pos, int _id){
-			pos=_pos;
-			id=_id;
+		public Firefly(){
+			pos= new Dpoint(0,0);
+
 		}
 
 		public Dpoint getPos() {
