@@ -11,7 +11,7 @@ import algcomp.alg.EggTSP;
 import algcomp.alg.FireflyAlg;
 import algcomp.alg.GeneticFunc;
 import algcomp.alg.GeneticTSP;
-import algcomp.alg.PSO;
+//import algcomp.alg.PSO;
 import algcomp.alg.TSPFireflyAlg;
 import algcomp.util.Function;
 import algcomp.util.Graph;
@@ -61,7 +61,7 @@ public class MainTester {
 //		TSPFireflyAlg fa = new TSPFireflyAlg(g, 50,60000,0.5,0.5);
 //		fa.fullrun();
 		
-		FireflyAlg fa = new FireflyAlg(f,512,512,5000,30,0.5,0.5,0.5);
+		FireflyAlg fa = new FireflyAlg(f,10000,50,1,0.5,1);
 		fa.FullRun();
 	}
 
