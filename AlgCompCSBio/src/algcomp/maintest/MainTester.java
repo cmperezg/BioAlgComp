@@ -22,7 +22,10 @@ public class MainTester {
 	public static void main(String[] args){
 		
 		//Function f = new Function("Bohachevsky");
-		Function f = new Function("Eggholder");
+		//Function f = new Function("Eggholder");
+		//Function f= new Function("Booth");
+		//Function f= new Function("Six Hump Camel");
+		Function f= new Function("Easom");
 //		System.out.println("rangex: " + f.getRangex() + " rangey: " + f.getRangey()
 //		+ " opt: " + f.getOptev());
 //		GeneticFunc gen = new GeneticFunc(f,100,0.6,10,0.001);
@@ -61,7 +64,7 @@ public class MainTester {
 //		TSPFireflyAlg fa = new TSPFireflyAlg(g, 50,60000,0.5,0.5);
 //		fa.fullrun();
 		
-		FireflyAlg fa = new FireflyAlg(f,10000,50,1,0.5,1);
+		FireflyAlg fa = new FireflyAlg(f,0.001,100,0.5,0.8,1);
 		fa.FullRun();
 	}
 

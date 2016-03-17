@@ -1,13 +1,14 @@
 package algcomp.alg;
 import algcomp.util.Function;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 public class FireflyAlg {
 	
 	int gridsizeX;
 	int gridsizeY;
 	double stepcoeff;
-	int EvolutionTime;
+	double Tol;
 	int numofflies;
 	double AbsCoeff;
 	double Attcoeff;
@@ -16,11 +17,11 @@ public class FireflyAlg {
 	Function f;
 	Firefly BestsoFar;
 	
-	public FireflyAlg(Function func, int _EvolutionTime,int _numofflies, double _AbsCoeff,double _stepcoeff, double _Attcoeff)
+	public FireflyAlg(Function func, double _Tol,int _numofflies, double _AbsCoeff,double _stepcoeff, double _Attcoeff)
 	{
 		gridsizeX=func.getRangex();
 		gridsizeY=func.getRangey();
-		EvolutionTime=_EvolutionTime;
+		Tol=_Tol;
 		numofflies=_numofflies;
 		AbsCoeff=_AbsCoeff;
 		Attcoeff=_Attcoeff;
@@ -121,13 +122,16 @@ public class FireflyAlg {
 	}
 	
 	public void FullRun(){
-		int t=1;
-		//Firefly Best;
-			for (t=1;t<=EvolutionTime;t++){
-				BestsoFar=Step ();
-			}
-			//Best=
-					FindBestSofar(current_generation);
+		long startTime = System.nanoTime();    
+		while(Math.abs(f.eval(BestsoFar.pos.getX(),BestsoFar.pos.getY())-f.getOptev()) > Tol) {
+			//System.out.println(bestsofar.eval-f.getOptev());
+			BestsoFar=Step();
+		}
+		FindBestSofar(current_generation);
+	long estimatedTime = System.nanoTime() - startTime;
+	double elapsedTimeInSeconds = TimeUnit.MILLISECONDS.convert(estimatedTime, TimeUnit.NANOSECONDS) / 1000.0;
+	System.out.println("Function: " + f.getType() + ", Time (s): " +elapsedTimeInSeconds+", Tolerance: " + Tol+", Ev: " + f.eval(BestsoFar.pos.getX(),BestsoFar.pos.getY()));
+					
 		return ;//Best;
 	}
 }
