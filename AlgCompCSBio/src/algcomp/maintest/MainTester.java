@@ -18,7 +18,7 @@ public class MainTester {
 	
 	public static void main(String[] args){
 		
-		Function f = new Function("Eggholder");
+		Function f = new Function("Bohachevsky");
 //		System.out.println("rangex: " + f.getRangex() + " rangey: " + f.getRangey()
 //		+ " opt: " + f.getOptev());
 //		GeneticFunc gen = new GeneticFunc(f,100,0.6,10,0.001);
@@ -48,7 +48,7 @@ public class MainTester {
 //		sct.evaluate(e);
 //		System.out.println(e.toString());
 		
-		BatAlgorithmFunction baf = new BatAlgorithmFunction(f,15,.001);
+		BatAlgorithmFunction baf = new BatAlgorithmFunction(f,300,.001);
 		Bat b = baf.fullrun();
 	}
 
