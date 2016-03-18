@@ -44,7 +44,7 @@ public class TSPfly {
 			System.out.print(path[i]+",");
 		}
 		
-		return ret+ " eval: " + Intensity;
+		return ret+ " eval: " + 1/Intensity;
 	}
 
 

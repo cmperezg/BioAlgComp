@@ -41,7 +41,7 @@ public class TSPFireflyAlg {
 	public void Evaluate(TSPfly fly, int index){ //before calling this function - call CompPathDist()
 		int j;
 		int id=index;
-		fly.Intensity= evaluatedist(fly);
+		fly.Intensity= 1/evaluatedist(fly);
 		for (j=0;j<gensize;j++){
 			if(j==id){
 				Attractive[id][j]=0;
