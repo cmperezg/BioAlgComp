@@ -1,6 +1,6 @@
 package algcomp.alg;
 //reference: https://github.com/AhmedHani/PySwarmOptimization/blob/master/bat_algorithm_package/bat_algorithm.py
-//reference: http://blog.acolyer.org/2015/09/24/a-new-metaheuristic-bat-inspired-algorithm/
+
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
@@ -10,11 +10,11 @@ import algcomp.util.Function;
 public class BatAlgorithmFunction {
 
 	Function f;
-	static double min_freq;
-	static double max_freq;
+	double min_freq;
+	double max_freq;
 	double max_loudness;
 	
-	static int numbats;
+	int numbats;
 	
 	
 	Bat[] bats_list;
@@ -26,7 +26,7 @@ public class BatAlgorithmFunction {
 	Bat bestbat;
 	
 	double tol;
-	static Random rand;
+	Random rand;
 	double iteration; //gencounter
 	
 	double average_loudness;
@@ -36,8 +36,8 @@ public class BatAlgorithmFunction {
 		rand = new Random();
 		f = _f;
 		min_freq = 0;
-		max_freq = 100;
-		max_loudness = 1;
+		max_freq = 10;
+		max_loudness = 100;
 		numbats = _numbats;
 		bats_list = new Bat[numbats];
 		tol = _tol;
@@ -51,18 +51,17 @@ public class BatAlgorithmFunction {
 			bats_list[i].setId(i);
 			initBat(bats_list[i]);
 			bats_pulse_frequency[i] = rand.nextDouble()*((max_freq - min_freq)+min_freq);
-			initial_bats_pulse_rate[i] = rand.nextDouble()/10;
-			bats_pulse_rate[i] = initial_bats_pulse_rate[i];
+			initial_bats_pulse_rate[i] = rand.nextDouble();
 			bats_loudness[i] = rand.nextDouble()*max_loudness;
 		}
 				
-		
+		bats_pulse_rate = initial_bats_pulse_rate;
 		iteration = 0;
 		
 		bestbat = new Bat();
 		initBat(bestbat);
 		
-		//average_loudness = mean(bats_loudness);
+		average_loudness = mean(bats_loudness);
 		
 
 	}
@@ -72,34 +71,30 @@ public class BatAlgorithmFunction {
 		bestbat = getBest();
 		average_loudness = mean(bats_loudness);
 		updateBats();
-		
 		for(int i = 0; i<bats_list.length; i++){
-			//System.out.println(bats_pulse_rate[i]);
+			double random = (rand.nextDouble()*2)-1;
+			double random2 = (rand.nextDouble()*2)-1;
 			if(rand.nextDouble() > bats_pulse_rate[i]){
-				
-				double random = (rand.nextDouble()*2)-1;
-				double random2 = (rand.nextDouble()*2)-1;
-				//System.out.println("herew");
+
 				bats_list[i].setNewposition(new Dpoint(bestbat.getPosition().getX()+(random*average_loudness),bestbat.getPosition().getY()+(random2*average_loudness)));
 			}else{
-				bats_list[i].setNewposition(new Dpoint(bats_list[i].getPosition().getX()+bats_list[i].getVelocity().getX(),bats_list[i].getPosition().getY()+bats_list[i].getVelocity().getY()));
+				bats_list[i].setNewposition(new Dpoint(bats_list[i].getPosition().getX()+random,bats_list[i].getPosition().getY()+random2));
 			}
 			
-			bats_list[i].setEval(f.eval(bats_list[i].getPosition().getX(), bats_list[i].getPosition().getY()));	
-			if(rand.nextDouble()<bats_loudness[i] & (f.eval(bats_list[i].getNewposition().getX(), bats_list[i].getNewposition().getY())
-					<= bats_list[i].getEval())
-					& isInRange(bats_list[i].getNewposition())){
+			eval(bats_list[i]);	
+			if(rand.nextDouble()*max_loudness < bats_loudness[i]
+					& (bats_list[i].getNeweval()
+					<= bats_list[i].getEval())){
 				bats_list[i].setPosition(bats_list[i].getNewposition());
 				bats_list[i].setEval(f.eval(bats_list[i].getPosition().getX(), bats_list[i].getPosition().getY()));	
 				bats_loudness[i] = updateLoudness(bats_loudness[i]);
-				bats_pulse_rate[i] = updatePulseRate(initial_bats_pulse_rate[i]);
-				double value = min_freq + rand.nextDouble()*(max_freq-min_freq);
-				bats_pulse_frequency[i] = value;
+				bats_pulse_rate[i] = updatePulseRate(bats_list[i]);
 				
 			}
 					
 			if(bats_list[i].getEval()
-					< f.eval(bestbat.getPosition().getX(), bestbat.getPosition().getY())){
+					< f.eval(bestbat.getPosition().getX(), bestbat.getPosition().getY())
+					& isInRange(bats_list[i].getPosition())){
 				bestbat = bats_list[i];
 			}
 		}
@@ -121,6 +116,16 @@ public class BatAlgorithmFunction {
 		return bestbat;
 	}
 	
+	void eval(Bat b){
+		double penalty = 0;
+		if(!isInRange(b.getNewposition())){
+			penalty = 1000;
+		}
+		b.setEval(f.eval(b.getPosition().getX(), b.getPosition().getY()));
+		b.setNeweval(f.eval(b.getNewposition().getX(), b.getNewposition().getY())+penalty);
+		
+
+	}
 	
 	void initBat(Bat b){
 		b.setNewposition(new Dpoint(rand.nextInt(f.getRangex()),rand.nextInt(f.getRangey())));
@@ -139,11 +144,9 @@ public class BatAlgorithmFunction {
 	}
 	
 	void updateVelocity(Bat b){
-		//double velx = b.getVelocity().getX()+bats_pulse_frequency[b.getId()]*((b.getPosition().getX()-bestbat.getPosition().getX()*bats_pulse_frequency[b.getId()]));
-		//double vely = b.getVelocity().getY()+bats_pulse_frequency[b.getId()]*((b.getPosition().getY()-bestbat.getPosition().getY()*bats_pulse_frequency[b.getId()]));
+		double velx = b.getVelocity().getX()+(b.getPosition().getX()-bestbat.getPosition().getX()*bats_pulse_frequency[b.getId()]);
+		double vely = b.getVelocity().getY()+(b.getPosition().getY()-bestbat.getPosition().getY()*bats_pulse_frequency[b.getId()]);
 		
-		double velx = b.getVelocity().getX()+(b.getPosition().getX()-bestbat.getPosition().getX())*bats_pulse_frequency[b.getId()];
-		double vely = b.getVelocity().getY()+(b.getPosition().getY()-bestbat.getPosition().getY())*bats_pulse_frequency[b.getId()];
 		b.setVelocity(new Dpoint(velx,vely));
 	}
 	
@@ -153,14 +156,18 @@ public class BatAlgorithmFunction {
 	}
 	
 	double updateLoudness(double oldloudness){
-		double alpha = 0.90;
+		double alpha = 0.99;
 		return oldloudness*alpha;
 	}
 	
-	double updatePulseRate(double pulserate){
-		double gamma = 0.01;
+	double updatePulseRate(Bat b){
 		
-		return (1-Math.exp(-gamma*iteration)*pulserate);
+		//double genv = Math.atan2(b.getVelocity().getX(), b.getVelocity().getY());
+		//double gamma = genv/bats_pulse_frequency[b.getId()];
+		double gamma = 0.99;
+		double ret = (1-Math.exp(-gamma*iteration)*bats_pulse_rate[b.getId()]);
+		//System.out.println(ret);
+		return ret;
 	}
 	
 	//plus or minus, random.
@@ -200,21 +207,11 @@ public class BatAlgorithmFunction {
 	}
 	
 	void updateBats(){
-		//updateFrequency();
+		updateFrequency();
 		for(int i = 0; i<numbats; i++){
 			updateVelocity(bats_list[i]);
 			//updatePosition(bats_list[i]);
 			//System.out.println(bats_list[i].toString());
 		}
 	}
-	
-//	public static void main(String[] args){
-//		min_freq = 0;
-//		max_freq = 100;
-//		rand = new Random();
-//		for(int i = 0; i<20;i++){
-//			//frequencies work //System.out.println(rand.nextDouble()*((max_freq - min_freq)+min_freq));
-//			System.out.println(rand.nextDouble()/10);
-//		}
-//	}
 }

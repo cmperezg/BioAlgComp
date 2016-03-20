@@ -9,9 +9,20 @@ public class Bat {
 	Dpoint velocity; //x = velocity for x
 	
 	double eval;
+	double neweval;
 	int id;
 	public int getId() {
 		return id;
+	}
+
+
+	public double getNeweval() {
+		return neweval;
+	}
+
+
+	public void setNeweval(double neweval) {
+		this.neweval = neweval;
 	}
 
 
