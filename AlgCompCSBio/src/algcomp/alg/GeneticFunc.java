@@ -129,7 +129,7 @@ public class GeneticFunc{
 		//extra step needed to process for minimization function. roulette method is natural for maximization.
 		for(int i = 0;i<current_generation.length;i++){
 			if(!current_generation[i].isFeasible()){
-				current_generation[i].setEval(2*fmax);
+				current_generation[i].setEval(current_generation[i].getEval()+1000);
 			}
 			double x = current_generation[i].getEval();
 			double fp = totmax-x;

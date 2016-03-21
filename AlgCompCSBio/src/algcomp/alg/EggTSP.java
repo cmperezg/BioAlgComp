@@ -50,7 +50,6 @@ public class EggTSP {
 	public void mutate() {
 		Random random =  new Random();
 		int mutpoint = random.nextInt(numpoints-1);
-		int mutpoint2 = random.nextInt(numpoints-1);
 		int temp = 0;
 		
 //		temp = path[mutpoint];
@@ -70,7 +69,7 @@ public class EggTSP {
 		
 	}
 	
-	// Fisher–Yates shuffle array function
+	// Fisher Yates shuffle array function
 			private void shuffleArray(int[] array)
 			{
 			    int index;
