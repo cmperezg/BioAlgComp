@@ -1,8 +1,10 @@
 package algcomp.alg; 
 
+import java.util.Random;
+
 import algcomp.util.Dpoint;
 
-public class Bat {
+public class Bat{
 
 	Dpoint position;
 	Dpoint newposition;
@@ -11,6 +13,26 @@ public class Bat {
 	double eval;
 	double neweval;
 	int id;
+	Random r;
+	public Bat(int rangex, int rangey, int _id){
+		r = new Random();
+		id = _id;
+		position = new Dpoint(r.nextInt(rangex),r.nextInt(rangey));
+		newposition = new Dpoint(r.nextInt(rangex),r.nextInt(rangey));
+		velocity = new Dpoint(0,0);
+		
+	}
+	public Bat(Bat b){
+		position = b.getPosition();
+		newposition = b.getNewposition();
+		velocity = b.getVelocity();
+		eval = b.getEval();
+		neweval = b.getNeweval();
+		id = b.getId();
+	}
+	public Bat(){
+		
+	}
 	public int getId() {
 		return id;
 	}

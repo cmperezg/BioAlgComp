@@ -2,7 +2,7 @@ package algcomp.alg;
 
 import java.util.Random;
 
-public class BatTSP {
+public class BatTSP{
 
 	int[] position;
 	int[] newposition;
@@ -63,6 +63,18 @@ public class BatTSP {
 	}
 	
 	
+	public String toString(){
+		return "path: " + printArray(position) + " ev: "+ eval;
+	}
+	
+	private String printArray(int[] arr){
+		String s = "";
+		for(int i = 0;i<arr.length;i++){
+			s = s+(arr[i]+" ");
+		}
+		
+		return s;
+	} 
 	
 	// Fisher Yates shuffle array function
 	private void shuffleArray(int[] array)

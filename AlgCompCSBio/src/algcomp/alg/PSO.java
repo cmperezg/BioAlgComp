@@ -94,6 +94,7 @@ public class PSO {
 		return gbest;
 	}
 	
+	
 	public Particle fullrun(){
 		System.out.println("PSO run");
 		long startTime = System.nanoTime();    
